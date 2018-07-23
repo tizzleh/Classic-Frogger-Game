@@ -1,0 +1,22 @@
+{
+  "name": "fend-frogger-game",
+  "version": "1.0.0",
+  "description": "frontend-nanodegree-arcade-game ===============================",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tizzleh/FEND-classic-frogger.git"
+  },
+  "author": "Ty Harlacker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tizzleh/FEND-classic-frogger/issues"
+  },
+  "homepage": "https://github.com/tizzleh/FEND-classic-frogger#readme",
+  "dependencies": {
+    "animate.css": "^3.6.1"
+  }
+}
