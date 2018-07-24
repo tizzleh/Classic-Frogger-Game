@@ -21,19 +21,44 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// var player = new Player;
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-const PLAYER = {
-  player: player {}
-};
+class Player {
+  constructor(x, y) {
 
+  }
+  update() {
+
+  }
+  render() {
+
+  }
+
+  handleInput(keyCode) {
+    if (keyCode) { //
+      // TODO: Create func to start game when keyCode == true 
+    }
+    if (keyCode == 'left') {
+      console.log('left Clicked');
+    }
+
+    if (keyCode == 'right') {
+
+      console.log('right clicked');
+    }
+  }
+}
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+let allEnemies = [ // TODO: Generate the enemies
+
+];
 
 
-
+let player = new Player();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -44,5 +69,5 @@ document.addEventListener('keyup', function(e) {
     40: 'down'
   };
 
-  player.handleInput(allowedKeys[e.keyCode]);
+  player.handleInput(ALLOWED_KEYS[e.keyCode]);
 });
