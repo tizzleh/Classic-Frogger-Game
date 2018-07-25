@@ -21,6 +21,7 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+let initPlayerY = 350;
 // var player = new Player;
 // Now write your own player class
 // This class requires an update(), render() and
@@ -30,23 +31,41 @@ class Player {
 
   }
   update() {
+    if (this.x) {
 
+    }
   }
   render() {
+    let sprites = 'images/char-boy.png';
+    let initPlayerX = 200;
+    // let initPlayerY = 350;
+    // let sprites = 'images/char-cat-girl.png';
+    ctx.drawImage(Resources.get(sprites), initPlayerX, initPlayerY); // Init player pos
+
 
   }
 
   handleInput(keyCode) {
+    // this.initPlayerY = initPlayerY;
     if (keyCode) { //
-      // TODO: Create func to start game when keyCode == true 
+      // TODO: Create func to start game when keyCode == true
     }
-    if (keyCode == 'left') {
-      console.log('left Clicked');
+    if (keyCode == 'up') {
+      console.log(keyCode);
+      initPlayerY -= 23;
+    }
+
+    if (keyCode == 'down') {
+      console.log(keyCode);
+      initPlayerY += 23;
     }
 
     if (keyCode == 'right') {
+      console.log(keyCode);
+    }
 
-      console.log('right clicked');
+    if (keyCode == 'left') {
+      console.log(keyCode);
     }
   }
 }
