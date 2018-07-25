@@ -1,8 +1,15 @@
 // Enemies our player must avoid
-let Enemy = function() {
+// class Enemy {
+//   constructor(x, y, speed) {
+//
+//   }
+// }
+let Enemy = function(x, y, speed) {
   // Variables applied to each of our instances go here,
   // we've provided one for you to get started
-
+  this.x = x;
+  this.y = y;
+  this.speed = speed;
   // The image/sprite for our enemies, this uses
   // a helper we've provided to easily load images
   this.sprite = 'images/enemy-bug.png';
@@ -14,6 +21,10 @@ Enemy.prototype.update = function(dt) {
   // You should multiply any movement by the dt parameter
   // which will ensure the game runs at the same speed for
   // all computers.
+  this.x = this.x + this.speed * dt;
+  if (this.x > 506) {
+    this.x = 1; // Put bug back at beginning of X axis when moves off canvas
+  }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -21,12 +32,21 @@ Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+console.log(getRandomInt(4));
+let initPlayerX = 200;
 let initPlayerY = 350;
+let moveSize = 50;
 // var player = new Player;
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player {
+
+  // let moveSize = 60;
   constructor(x, y) {
 
   }
@@ -37,7 +57,7 @@ class Player {
   }
   render() {
     let sprites = 'images/char-boy.png';
-    let initPlayerX = 200;
+    // let initPlayerX = 200;
     // let initPlayerY = 350;
     // let sprites = 'images/char-cat-girl.png';
     ctx.drawImage(Resources.get(sprites), initPlayerX, initPlayerY); // Init player pos
@@ -52,20 +72,22 @@ class Player {
     }
     if (keyCode == 'up') {
       console.log(keyCode);
-      initPlayerY -= 23;
+      initPlayerY -= moveSize;
     }
 
     if (keyCode == 'down') {
       console.log(keyCode);
-      initPlayerY += 23;
+      initPlayerY += moveSize;
     }
 
     if (keyCode == 'right') {
       console.log(keyCode);
+      initPlayerX += moveSize;
     }
 
     if (keyCode == 'left') {
       console.log(keyCode);
+      initPlayerX -= moveSize;
     }
   }
 }
