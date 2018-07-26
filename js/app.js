@@ -1,19 +1,24 @@
 // Enemies our player must avoid
-// class Enemy {
-//   constructor(x, y, speed) {
-//
-//   }
-// }
-let Enemy = function(x, y, speed) {
-  // Variables applied to each of our instances go here,
-  // we've provided one for you to get started
-  this.x = x;
-  this.y = y;
-  this.speed = speed;
-  // The image/sprite for our enemies, this uses
-  // a helper we've provided to easily load images
-  this.sprite = 'images/enemy-bug.png';
-};
+class Enemy {
+  constructor(x, y, speed) {
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    // The image/sprite for our enemies, this uses
+    // a helper we've provided to easily load images
+    this.sprite = 'images/enemy-bug.png';
+  }
+}
+// let Enemy = function(x, y, speed) {
+//   // Variables applied to each of our instances go here,
+//   // we've provided one for you to get started
+//   this.x = x;
+//   this.y = y;
+//   this.speed = speed;
+//   // The image/sprite for our enemies, this uses
+//   // a helper we've provided to easily load images
+//   this.sprite = 'images/enemy-bug.png';
+// };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -39,7 +44,7 @@ function getRandomInt(max) {
 console.log(getRandomInt(4));
 let initPlayerX = 200;
 let initPlayerY = 350;
-let moveSize = 50;
+// let moveSize = 50;
 // var player = new Player;
 // Now write your own player class
 // This class requires an update(), render() and
@@ -47,8 +52,9 @@ let moveSize = 50;
 class Player {
 
   // let moveSize = 60;
-  constructor(x, y) {
+  constructor(x, y, moveSize) {
 
+    this.moveSize = moveSize = 50;
   }
   update() {
     if (this.x) {
@@ -72,22 +78,22 @@ class Player {
     }
     if (keyCode == 'up') {
       console.log(keyCode);
-      initPlayerY -= moveSize;
+      initPlayerY -= player.moveSize;
     }
 
     if (keyCode == 'down') {
       console.log(keyCode);
-      initPlayerY += moveSize;
+      initPlayerY += player.moveSize;
     }
 
     if (keyCode == 'right') {
       console.log(keyCode);
-      initPlayerX += moveSize;
+      initPlayerX += player.moveSize;
     }
 
     if (keyCode == 'left') {
       console.log(keyCode);
-      initPlayerX -= moveSize;
+      initPlayerX -= player.moveSize;
     }
   }
 }
