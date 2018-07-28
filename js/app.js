@@ -10,51 +10,44 @@ class Enemy {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.xOffset = 8; // Offset to center of bug on X
-    this.yOffset = 4; // Offset to center of bug on Y
+    // this.xOffset = 8; // Offset to center of bug on X
+    // this.yOffset = 4; // Offset to center of bug on Y
   }
-  update(dt) {
-    // console.log(dt);
-    // this.x = this.x + 100 * dt;
-    // console.log(dt);
-    // let bug = 'images/enemy-bug.png';
-    // ctx.drawImage(Resources.get(bug), 100, 100);
-    // console.log(ctx.isPointInPath(this.x, 350));
-    if (ctx.isPointInPath(this.x, initPlayerX)) {
-      alert('hhhhhh');
-      console.log(ctx.isPointInPath(this.x, 200));
-    }
-    // ctx.drawImage(Resources.get(this.sprite), 140, 120);
-    // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 
-    if (initPlayerX < this.x + 60 &&
-      initPlayerX + 60 > this.x &&
+  update(dt) {
+
+    this.x = this.x + this.speed * dt;
+
+    if (initPlayerY <= -20) {
+      console.log('hit water');
+      initPlayerY = 350;
+      initPlayerX = 200;
+      level++;
+      console.log(level);
+    }
+
+    // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+    if (initPlayerX < this.x + 80 &&
+      initPlayerX + 80 > this.x &&
       initPlayerY < this.y + 50 &&
       50 + initPlayerY > this.y) {
-      // console.log('allalaaal');
       initPlayerY = 350;
       initPlayerX = 200;
       livesLeft--;
       console.log(livesLeft);
     }
 
-    this.x = this.x + this.speed * dt;
     if (this.x > 506) {
       this.x = -100; // Put bug back at beginning of X axis when moves off canvas
     }
+
   }
 
   render() {
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
-    // ctx.drawImage(Resources.get(this.sprite), this.x * this.xOffset, this.y * this.yOffset, this.width, this.height);
-    if (ctx.isPointInPath) {
-      // console.log(ctx.isPointInPath);
-      // alert('true');
-    }
-    // ctx.addHitRegion({});
-    // this.x = this.x + 100 * dt;
   }
+
 }
 
 // Update the enemy's position, required method for game
@@ -70,24 +63,13 @@ class Enemy {
 //   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 // };
 let enemy = new Enemy();
-
-// let dt = this.dt;
-// enemy.update();
-// enemy.render();
-console.log(getRandomInt(4));
 let initPlayerX = 200;
 let initPlayerY = 350;
 let livesLeft = 5;
-// let moveSize = 50;
-// var player = new Player;
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+let level = 1;
 class Player {
 
-  // let moveSize = 60;
   constructor(x, y, moveSize) {
-    // let moveSize = moveSize = 50;
     this.moveSize = moveSize = 50;
   }
   update() {
@@ -97,12 +79,7 @@ class Player {
   }
   render() {
     let sprites = 'images/char-boy.png';
-    // let initPlayerX = 200;
-    // let initPlayerY = 350;
-    // let sprites = 'images/char-cat-girl.png';
     ctx.drawImage(Resources.get(sprites), initPlayerX, initPlayerY); // Init player pos
-
-
   }
 
   handleInput(keyCode) {
