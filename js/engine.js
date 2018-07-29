@@ -22,6 +22,7 @@ let Engine = (function(global) { // TODO: Use ES6 where possible.
   let doc = global.document,
     win = global.window,
     canvas = doc.createElement('canvas'),
+    // canvas = doc.getElementById('canvas'),
     ctx = canvas.getContext('2d'),
     lastTime;
 

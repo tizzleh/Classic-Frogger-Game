@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tizzleh/FEND-classic-frogger#readme",
   "dependencies": {
     "animate.css": "^3.6.1",
-    "craftyjs": "^0.9.0"
+    "craftyjs": "^0.9.0",
+    "easytimer.js": "^2.2.3"
   }
 }

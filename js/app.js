@@ -1,4 +1,12 @@
-// Enemies our player must avoid
+let initPlayerX = 200;
+let initEnemyX = -100;
+let initEnemyY = 50;
+let initPlayerY = 350;
+let livesLeft = 5;
+let level = 0;
+let speed = 10; // Does this need to be in the global scope?
+let allEnemies = [];
+
 class Enemy {
   constructor(x, y, speed) {
     this.x = x;
@@ -6,133 +14,95 @@ class Enemy {
     this.speed = speed;
     this.width = 101; // Image width
     this.height = 171; // Image height
-    this.speed = 20; // Increment this to make bugs move faster
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    // this.xOffset = 8; // Offset to center of bug on X
-    // this.yOffset = 4; // Offset to center of bug on Y
   }
 
   update(dt) {
 
     this.x = this.x + this.speed * dt;
 
-    if (initPlayerY <= -20) {
-      console.log('hit water');
-      initPlayerY = 350;
-      initPlayerX = 200;
-      level++;
-      console.log(level);
+    if (initPlayerY <= -20) { // Player has reached water
+      initPlayerY = 350; // Place player at start position
+      initPlayerX = 200; // Place player at start position
+      level++; // Increment level
+      speed += 10; // Increment speed
+      this.pushBugs(); // Push more bugs to array to increase difficulty
+      if (initEnemyY <= 300) { // Move bugs down as long as they aren't on grass
+        initEnemyY += 40; // Move bugs down from previous ones
+      } else {
+        initEnemyY === 50; // Start placing bugs at top of stones again
+      }
+    }
+
+    if (this.y > 240) { // Keep the bugs in the stone area
+      this.y = 50;
+    }
+
+    if (this.x > 506) { // Put bug back at beginning of X axis when moves off canvas
+      this.x = -100;
     }
 
     // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-    if (initPlayerX < this.x + 80 &&
-      initPlayerX + 80 > this.x &&
+    if (initPlayerX < this.x + 70 &&
+      initPlayerX + 70 > this.x &&
       initPlayerY < this.y + 50 &&
-      50 + initPlayerY > this.y) {
-      initPlayerY = 350;
-      initPlayerX = 200;
-      livesLeft--;
-      console.log(livesLeft);
+      50 + initPlayerY > this.y) { // Detect collision
+      initPlayerY = 350; // Move player back to start postion
+      initPlayerX = 200; // Move player back to start postion
+      livesLeft--; // Decrement livesLeft
     }
+  }
 
-    if (this.x > 506) {
-      this.x = -100; // Put bug back at beginning of X axis when moves off canvas
-    }
-
+  pushBugs() {
+    allEnemies.push(new Enemy(initEnemyX, initEnemyY, speed, 'images/enemy-bug.png'));
   }
 
   render() {
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
   }
-
 }
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
-// Enemy.prototype.update = function(dt) {
-// You should multiply any movement by the dt parameter
-// which will ensure the game runs at the same speed for
-// all computers.
-// };
-
-// Draw the enemy on the screen, required method for game
-// Enemy.prototype.render = function() {
-//   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// };
 let enemy = new Enemy();
-let initPlayerX = 200;
-let initPlayerY = 350;
-let livesLeft = 5;
-let level = 1;
+
 class Player {
 
   constructor(x, y, moveSize) {
     this.moveSize = moveSize = 50;
+    this.sprite = 'images/char-boy.png';
   }
-  update() {
-    if (this.x) {
 
-    }
+  update() { // Not sure why this is here
+    if (this.x) {}
   }
+
   render() {
-    let sprites = 'images/char-boy.png';
-    ctx.drawImage(Resources.get(sprites), initPlayerX, initPlayerY); // Init player pos
+    ctx.drawImage(Resources.get(this.sprite), initPlayerX, initPlayerY); // Init player pos
   }
 
   handleInput(keyCode) {
-    // this.initPlayerY = initPlayerY;
-    if (keyCode) { //
-      // TODO: Create func to start game when keyCode == true
+    if (keyCode) {
+      if (allEnemies.length == 0 && allEnemies.length <= 10) { // If no bugs, add them
+        enemy.pushBugs();
+      }
     }
+
     if (keyCode == 'up') {
-      console.log(keyCode);
       initPlayerY -= player.moveSize;
     }
 
-    if (keyCode == 'down') {
-      console.log(keyCode);
+    if (keyCode == 'down' && initPlayerY < 400) { // Move if player on board
       initPlayerY += player.moveSize;
     }
 
-    if (keyCode == 'right') {
-      console.log(keyCode);
+    if (keyCode == 'right' && initPlayerX < 400) { // Move if player on board
       initPlayerX += player.moveSize;
     }
 
-    if (keyCode == 'left') {
-      console.log(keyCode);
+    if (keyCode == 'left' && initPlayerX > 0) { // Check if player on board, move if so
       initPlayerX -= player.moveSize;
     }
   }
-}
-let initEnemyX = -100;
-let initEnemyY = 50;
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-let allEnemies = [
-  // new Enemy(-(Math.floor(1 + Math.random() * 5)), 1),
-  // new Enemy(-(Math.floor(1 + Math.random() * 5)), 2),
-  // new Enemy(-(Math.floor(1 + Math.random() * 5)), 3)
-];
-const bug1 = new Enemy(initEnemyX, initEnemyY, 'images/enemy-bug.png');
-// const bug2 = new Enemy(-100, 0, 100, 'images/enemy-bug.png');
-// const bug3 = new Enemy(401, 401, 'images/enemy-bug.png');
-const bug4 = new Enemy(initEnemyX, initEnemyY, 'images/enemy-bug.png');
-const bug5 = new Enemy(-100, initEnemyY, 'images/enemy-bug.png');
-const bug6 = new Enemy(-200, initEnemyY + 100, 'images/enemy-bug.png');
-allEnemies.push(bug1);
-// allEnemies.push(bug2);
-// allEnemies.push(bug3);
-allEnemies.push(bug4);
-allEnemies.push(bug5);
-allEnemies.push(bug6);
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
 }
 
 let player = new Player();
