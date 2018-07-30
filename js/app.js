@@ -1,22 +1,24 @@
-let initPlayerX = 200;
-let initEnemyX = -100;
-let initEnemyY = 50;
-let initPlayerY = 350;
-let livesLeft = 5;
-let level = 0;
+'use strict';
 let speed = 10;
-let allEnemies = [];
+let allEnemies = []; // Array holding enemies
 
 let refresh = document.getElementById('reset'); // Place in a class?
 refresh.addEventListener('click', function(e) { // Listen for click event
   window.location.reload(true); // Reset (refresh) page to reset(hacky)
 });
 
+class Character { // TODO: Inherit common properties from this class
+  constructor() {
+
+  }
+}
 
 class Enemy {
   constructor(x, y, speed) {
     this.x = x;
     this.y = y;
+    this.initEnemyX = -100;
+    this.initEnemyY = 50;
     this.speed = speed;
     this.width = 101; // Image width
     this.height = 171; // Image height
@@ -27,19 +29,19 @@ class Enemy {
 
     this.x = this.x + this.speed * dt; // Delta time to universalize movement
 
-    if (initPlayerY < -20) { // Player has reached water
-      initPlayerY = 350; // Place player at start position
-      initPlayerX = 200; // Place player at start position
-      level++; // Increment level
-      speed += 10; // Increment speed
-      $('#level').html(level); // Update life count
-      if (level % 3 === 0) { // Add bug every third level
+    if (player.initPlayerY < -20) { // Player has reached water
+      player.initPlayerY = 350; // Place player at start position
+      player.initPlayerX = 200; // Place player at start position
+      player.level++; // Increment level
+      speed += 10; // Increment speed, must be global, otherwise only one bug.
+      $('#level').html(player.level); // Update life count
+      if (player.level % 3 === 0) { // Add bug every third level
         this.pushBugs(); // Push more bugs to array to increase difficulty
       }
-      if (initEnemyY < 220) { // Move bugs down as long as they aren't on grass
-        initEnemyY += 35; // Move bugs down from previous ones
+      if (this.initEnemyY < 220) { // Move bugs down as long as they aren't on grass
+        this.initEnemyY += 35; // Move bugs down from previous ones
       } else {
-        initEnemyY = 40; // Start placing bugs at top of stones again
+        this.initEnemyY = 40; // Start placing bugs at top of stones again
         // this.y = 50;
       }
     }
@@ -49,30 +51,28 @@ class Enemy {
     }
 
     // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-    if (initPlayerX < this.x + 70 &&
-      initPlayerX + 70 > this.x &&
-      initPlayerY < this.y + 50 &&
-      50 + initPlayerY > this.y) { // Detect collision
-      initPlayerY = 350; // Move player back to start postion
-      initPlayerX = 200; // Move player back to start postion
-      livesLeft--; // Decrement livesLeft
-      $('#lives').html(livesLeft);
+    if (player.initPlayerX < this.x + 70 && // Character must overlap
+      player.initPlayerX + 70 > this.x &&
+      player.initPlayerY < this.y + 50 &&
+      50 + player.initPlayerY > this.y) { // Detect collision
+      player.initPlayerY = 350; // Move player back to start postion
+      player.initPlayerX = 200; // Move player back to start postion
+      player.livesLeft--; // Decrement livesLeft
+      $('#lives').html(player.livesLeft);
       // $('#lives')
       this.dialog();
     }
   }
   // This modal shows when life count has been depleted
   dialog() {
-    if (livesLeft < 0) {
-      $('#lives').html('0');
-      // speed = 0
-      // this.y = 0;
+    if (player.livesLeft < 0) {
       allEnemies = [];
+      $('#lives').html('0');
+      // this.allEnemies = [];
       vex.dialog.confirm({
-        message: `You made it to level ${level}! Do you want to play again?`,
+        message: `You made it to level ${player.level}! Do you want to play again?`,
         callback: function(value) {
           if (value) {
-            // $('#lives').html(0);
             window.location.reload(true); // Reset (refresh) page to reset(hacky)
           }
         }
@@ -80,12 +80,12 @@ class Enemy {
     }
   }
   pushBugs() {
-    allEnemies.push(new Enemy(initEnemyX, initEnemyY, speed, this.sprite));
+    allEnemies.push(new Enemy(this.initEnemyX, this.initEnemyY, speed, this.sprite));
   }
 
   render() {
     // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   }
 }
 
@@ -93,9 +93,15 @@ let enemy = new Enemy();
 
 class Player {
 
-  constructor(x, y, moveSize) {
-    this.moveSize = moveSize = 50;
+  constructor(x, y) {
+    this.moveSize = 50;
     this.sprite = 'images/char-boy.png';
+    this.livesLeft = 5;
+    this.level = 0;
+    this.initPlayerY = 350;
+    this.initPlayerX = 200;
+    this.x = x;
+    this.y = y;
   }
 
   update() { // Not sure why this is here
@@ -103,30 +109,30 @@ class Player {
   }
 
   render() {
-    ctx.drawImage(Resources.get(this.sprite), initPlayerX, initPlayerY); // Init player pos
+    ctx.drawImage(Resources.get(this.sprite), this.initPlayerX, this.initPlayerY); // Init player pos
   }
 
   handleInput(keyCode) {
     if (keyCode) {
-      if (allEnemies.length == 0 && allEnemies.length <= 10) { // If no bugs, add them
+      if (allEnemies.length === 0) { // Put first bug on board when key pressed
         enemy.pushBugs();
       }
     }
 
     if (keyCode == 'up') {
-      initPlayerY -= player.moveSize;
+      this.initPlayerY -= this.moveSize;
     }
 
-    if (keyCode == 'down' && initPlayerY < 400) { // Move if player on board
-      initPlayerY += player.moveSize;
+    if (keyCode == 'down' && this.initPlayerY < 400) { // Move if player on board
+      this.initPlayerY += this.moveSize;
     }
 
-    if (keyCode == 'right' && initPlayerX < 400) { // Move if player on board
-      initPlayerX += player.moveSize;
+    if (keyCode == 'right' && this.initPlayerX < 400) { // Move if player on board
+      this.initPlayerX += this.moveSize;
     }
 
-    if (keyCode == 'left' && initPlayerX > 0) { // Check if player on board, move if so
-      initPlayerX -= player.moveSize;
+    if (keyCode == 'left' && this.initPlayerX > 0) { // Check if player on board, move if so
+      this.initPlayerX -= this.moveSize;
     }
   }
 }
