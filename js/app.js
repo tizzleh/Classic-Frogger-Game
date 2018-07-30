@@ -35,7 +35,7 @@ class Enemy {
       player.level++; // Increment level
       speed += 10; // Increment speed, must be global, otherwise only one bug.
       $('#level').html(player.level); // Update life count
-      if (player.level % 3 === 0) { // Add bug every third level
+      if (player.level % 3 === 0 && allEnemies.length < 10) { // Add bug every third level
         this.pushBugs(); // Push more bugs to array to increase difficulty
       }
       if (this.initEnemyY < 220) { // Move bugs down as long as they aren't on grass
