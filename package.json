@@ -19,6 +19,11 @@
   "dependencies": {
     "animate.css": "^3.6.1",
     "craftyjs": "^0.9.0",
-    "easytimer.js": "^2.2.3"
+    "easytimer.js": "^2.2.3",
+    "vex-js": "^4.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "eslint-config-google": "^0.9.1"
   }
 }

@@ -1,6 +1,32 @@
-frontend-nanodegree-arcade-game
-===============================
+# Udacity's Front-End Nanodegree Classic Arcade Game
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+This is a requirement for the Udacity FEND program. A simple game, the object is to move the player across board without colliding with a bug.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Getting Started
+
+Visit the following link to play: [Classic Arcade Game](https://tizzleh.github.io/FEND-classic-frogger/)
+
+Game begins when an arrow key is pressed. Move player to top of screen while avoiding the bugs. Each time your player reaches the water, the level will increase and game will become more difficult.
+
+## Built With
+* [vex.js](https://github.com/HubSpot/vex) - Modal library
+* [jQuery](https://github.com/jquery/jquery) - Used to make life easier
+* [bootsrap](https://github.com/twbs/bootstrap) - CSS/HTML framework
+## Contributing
+
+This project is a requirement for a Udacity course, no contributions will be accepted.
+
+## Authors
+
+* **Udacity** - *Initial work* - [Udacity](https://github.com/udacity)
+* **Ty Harlacker** - *JavaScript* - [tizzleh](https://github.com/tizzleh)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Udacity
+* My parents
+* My project mentor for not letting me stress about deadlines.

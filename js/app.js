@@ -4,8 +4,14 @@ let initEnemyY = 50;
 let initPlayerY = 350;
 let livesLeft = 5;
 let level = 0;
-let speed = 10; // Does this need to be in the global scope?
+let speed = 10;
 let allEnemies = [];
+
+let refresh = document.getElementById('reset'); // Place in a class?
+refresh.addEventListener('click', function(e) { // Listen for click event
+  window.location.reload(true); // Reset (refresh) page to reset(hacky)
+});
+
 
 class Enemy {
   constructor(x, y, speed) {
@@ -14,28 +20,28 @@ class Enemy {
     this.speed = speed;
     this.width = 101; // Image width
     this.height = 171; // Image height
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/enemy-bug.png'; // Bug file location
   }
 
   update(dt) {
 
-    this.x = this.x + this.speed * dt;
+    this.x = this.x + this.speed * dt; // Delta time to universalize movement
 
-    if (initPlayerY <= -20) { // Player has reached water
+    if (initPlayerY < -20) { // Player has reached water
       initPlayerY = 350; // Place player at start position
       initPlayerX = 200; // Place player at start position
       level++; // Increment level
       speed += 10; // Increment speed
-      this.pushBugs(); // Push more bugs to array to increase difficulty
-      if (initEnemyY <= 300) { // Move bugs down as long as they aren't on grass
-        initEnemyY += 40; // Move bugs down from previous ones
-      } else {
-        initEnemyY === 50; // Start placing bugs at top of stones again
+      $('#level').html(level); // Update life count
+      if (level % 3 === 0) { // Add bug every third level
+        this.pushBugs(); // Push more bugs to array to increase difficulty
       }
-    }
-
-    if (this.y > 240) { // Keep the bugs in the stone area
-      this.y = 50;
+      if (initEnemyY < 220) { // Move bugs down as long as they aren't on grass
+        initEnemyY += 35; // Move bugs down from previous ones
+      } else {
+        initEnemyY = 40; // Start placing bugs at top of stones again
+        // this.y = 50;
+      }
     }
 
     if (this.x > 506) { // Put bug back at beginning of X axis when moves off canvas
@@ -50,11 +56,28 @@ class Enemy {
       initPlayerY = 350; // Move player back to start postion
       initPlayerX = 200; // Move player back to start postion
       livesLeft--; // Decrement livesLeft
+      $('#lives').html(livesLeft);
+      // $('#lives')
+      this.dialog();
     }
   }
-
+  // This modal shows when life count has been depleted
+  dialog() {
+    if (livesLeft < 0) {
+      $('#lives').html('0');
+      vex.dialog.confirm({
+        message: `You made it to the ${level} level! Do you want to play again?`,
+        callback: function(value) {
+          if (value) {
+            // $('#lives').html(0);
+            window.location.reload(true); // Reset (refresh) page to reset(hacky)
+          }
+        }
+      });
+    }
+  }
   pushBugs() {
-    allEnemies.push(new Enemy(initEnemyX, initEnemyY, speed, 'images/enemy-bug.png'));
+    allEnemies.push(new Enemy(initEnemyX, initEnemyY, speed, this.sprite));
   }
 
   render() {
