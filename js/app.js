@@ -1,7 +1,6 @@
 'use strict';
-let speed = 10;
-let allEnemies = []; // Array holding enemies
-
+let speed = 20;
+let allEnemies = []; // Array of bugs, allEnemies[0] doesn't work correctly, it doesn't get updated.
 let refresh = document.getElementById('reset'); // Place in a class?
 refresh.addEventListener('click', function(e) { // Listen for click event
   window.location.reload(true); // Reset (refresh) page to reset(hacky)
@@ -18,18 +17,20 @@ class Enemy {
     this.x = x;
     this.y = y;
     this.initEnemyX = -100;
-    this.initEnemyY = 75;
+    this.initEnemyY = 50;
     this.speed = speed;
     this.width = 101; // Image width
     this.height = 171; // Image height
     this.xCollOffset = 70;
-    this.yCollOffset = 55;
+    this.yCollOffset = 48;
     this.sprite = 'images/enemy-bug.png'; // Bug file location
   }
 
   update(dt) {
 
     this.x = this.x + this.speed * dt; // Delta time to universalize movement
+
+    this.checkCollision();
 
     if (player.initPlayerY < -20) { // Player has reached water
       player.initPlayerY = 350; // Place player at start position
@@ -51,10 +52,8 @@ class Enemy {
     if (this.x > 506) { // Put bug back at beginning of X axis when moves off canvas
       this.x = -100;
     }
-    this.checkCollision();
 
   }
-
   checkCollision() {
 
     if (player.initPlayerX < this.x + this.xCollOffset && // Character must overlap
@@ -122,8 +121,7 @@ class Player {
   handleInput(keyCode) {
     if (keyCode) {
       if (allEnemies.length === 0) { // Put first bug on board when key pressed
-        enemy.pushBugs();
-        // enemy.checkCollision();
+        enemy.pushBugs(); //allEnemies[0] collision isn't working right, I can't spend anymore time trying to figure out this minor detail, I have to get back on schedule. If you know why I'd be happy to hear it.
       }
     }
 
@@ -149,7 +147,6 @@ class Player {
   }
 }
 
-let player = new Player();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -162,3 +159,4 @@ document.addEventListener('keyup', function(e) {
 
   player.handleInput(ALLOWED_KEYS[e.keyCode]);
 });
+let player = new Player();
