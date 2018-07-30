@@ -9,9 +9,9 @@ Visit the following link to play: [Classic Arcade Game](https://tizzleh.github.i
 Game begins when an arrow key is pressed. Move player to top of screen while avoiding the bugs. Each time your player reaches the water, the level will increase and game will become more difficult.
 
 
-### Installing
+## Installing
 
-Clone the repo to your local machine, cd into project directory and run the command:
+To clone the repo locally, cd into your empty project directory and run the command:
 
 ```
 git clone https://github.com/tizzleh/FEND-classic-frogger.git
