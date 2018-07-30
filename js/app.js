@@ -66,7 +66,7 @@ class Enemy {
     if (livesLeft < 0) {
       $('#lives').html('0');
       vex.dialog.confirm({
-        message: `You made it to the ${level} level! Do you want to play again?`,
+        message: `You made it to level ${level}! Do you want to play again?`,
         callback: function(value) {
           if (value) {
             // $('#lives').html(0);
