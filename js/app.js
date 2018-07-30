@@ -18,12 +18,12 @@ class Enemy {
     this.x = x;
     this.y = y;
     this.initEnemyX = -100;
-    this.initEnemyY = 50;
+    this.initEnemyY = 75;
     this.speed = speed;
     this.width = 101; // Image width
     this.height = 171; // Image height
     this.xCollOffset = 70;
-    this.yCollOffset = 53;
+    this.yCollOffset = 55;
     this.sprite = 'images/enemy-bug.png'; // Bug file location
   }
 
@@ -51,8 +51,12 @@ class Enemy {
     if (this.x > 506) { // Put bug back at beginning of X axis when moves off canvas
       this.x = -100;
     }
+    this.checkCollision();
 
-    // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+  }
+
+  checkCollision() {
+
     if (player.initPlayerX < this.x + this.xCollOffset && // Character must overlap
       player.initPlayerX + this.xCollOffset > this.x &&
       player.initPlayerY < this.y + this.yCollOffset &&
@@ -65,6 +69,7 @@ class Enemy {
       this.dialog();
     }
   }
+  // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
   // This modal shows when life count has been depleted
   dialog() {
     if (player.livesLeft < 0) {
@@ -118,23 +123,28 @@ class Player {
     if (keyCode) {
       if (allEnemies.length === 0) { // Put first bug on board when key pressed
         enemy.pushBugs();
+        // enemy.checkCollision();
       }
     }
 
     if (keyCode == 'up') {
       this.initPlayerY -= this.moveSize;
+      // enemy.checkCollision();
     }
 
     if (keyCode == 'down' && this.initPlayerY < 400) { // Move if player on board
       this.initPlayerY += this.moveSize;
+      // enemy.checkCollision();
     }
 
     if (keyCode == 'right' && this.initPlayerX < 400) { // Move if player on board
       this.initPlayerX += this.moveSize;
+      // enemy.checkCollision();
     }
 
     if (keyCode == 'left' && this.initPlayerX > 0) { // Check if player on board, move if so
       this.initPlayerX -= this.moveSize;
+      // enemy.checkCollision();
     }
   }
 }
