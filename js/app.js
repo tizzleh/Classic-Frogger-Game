@@ -22,6 +22,8 @@ class Enemy {
     this.speed = speed;
     this.width = 101; // Image width
     this.height = 171; // Image height
+    this.xCollOffset = 70;
+    this.yCollOffset = 53;
     this.sprite = 'images/enemy-bug.png'; // Bug file location
   }
 
@@ -51,10 +53,10 @@ class Enemy {
     }
 
     // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-    if (player.initPlayerX < this.x + 70 && // Character must overlap
-      player.initPlayerX + 70 > this.x &&
-      player.initPlayerY < this.y + 50 &&
-      50 + player.initPlayerY > this.y) { // Detect collision
+    if (player.initPlayerX < this.x + this.xCollOffset && // Character must overlap
+      player.initPlayerX + this.xCollOffset > this.x &&
+      player.initPlayerY < this.y + this.yCollOffset &&
+      this.yCollOffset + player.initPlayerY > this.y) { // Detect collision
       player.initPlayerY = 350; // Move player back to start postion
       player.initPlayerX = 200; // Move player back to start postion
       player.livesLeft--; // Decrement livesLeft
