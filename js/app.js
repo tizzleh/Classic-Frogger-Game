@@ -22,7 +22,7 @@ class Enemy {
     this.width = 101; // Image width
     this.height = 171; // Image height
     this.xCollOffset = 70;
-    this.yCollOffset = 48;
+    this.yCollOffset = 50;
     this.sprite = 'images/enemy-bug.png'; // Bug file location
   }
 
@@ -41,11 +41,10 @@ class Enemy {
       if (player.level % 3 === 0 && allEnemies.length < 10) { // Add bug every third level
         this.pushBugs(); // Push more bugs to array to increase difficulty
       }
-      if (this.initEnemyY < 220) { // Move bugs down as long as they aren't on grass
-        this.initEnemyY += 35; // Move bugs down from previous ones
+      if (this.initEnemyY <= 210) { // Move bugs down as long as they aren't on grass
+        this.initEnemyY += 50; // Move bugs down from previous ones
       } else {
-        this.initEnemyY = 40; // Start placing bugs at top of stones again
-        // this.y = 50;
+        this.initEnemyY = 50; // Start placing bugs at top of stones again
       }
     }
 
@@ -121,27 +120,31 @@ class Player {
   handleInput(keyCode) {
     if (keyCode) {
       if (allEnemies.length === 0) { // Put first bug on board when key pressed
-        enemy.pushBugs(); //allEnemies[0] collision isn't working right, I can't spend anymore time trying to figure out this minor detail, I have to get back on schedule. If you know why I'd be happy to hear it.
+        enemy.pushBugs(); // Push bugs
       }
     }
 
     if (keyCode == 'up') {
       this.initPlayerY -= this.moveSize;
       // enemy.checkCollision();
+      console.log(`Y axis of player is: ${this.initPlayerY}`);
     }
 
     if (keyCode == 'down' && this.initPlayerY < 400) { // Move if player on board
       this.initPlayerY += this.moveSize;
+      console.log(`Y axis of player is: ${this.initPlayerY}`);
       // enemy.checkCollision();
     }
 
     if (keyCode == 'right' && this.initPlayerX < 400) { // Move if player on board
       this.initPlayerX += this.moveSize;
+      console.log(`Y axis of player is: ${this.initPlayerY}`);
       // enemy.checkCollision();
     }
 
     if (keyCode == 'left' && this.initPlayerX > 0) { // Check if player on board, move if so
       this.initPlayerX -= this.moveSize;
+      console.log(`Y axis of player is: ${this.initPlayerY}`);
       // enemy.checkCollision();
     }
   }
