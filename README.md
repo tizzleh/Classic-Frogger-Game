@@ -24,6 +24,7 @@ Step 2: Open up index.html in your browser to begin playing game.
 * [vex.js](https://github.com/HubSpot/vex) - Modal library
 * [jQuery](https://github.com/jquery/jquery) - Used to make life easier
 * [bootsrap](https://github.com/twbs/bootstrap) - CSS/HTML framework
+* [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) - API used for graphics
 
 ## Contributing
 
