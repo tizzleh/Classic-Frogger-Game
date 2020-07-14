@@ -1,4 +1,4 @@
-# Udacity's Front-End Nanodegree Classic Arcade Game
+# Classic Arcade Game
 
 This is a requirement for the Udacity FEND program. A simple game, the object is to move the player across board without colliding with a bug.
 
